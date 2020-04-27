@@ -10,7 +10,6 @@ const cookieObj = new Cookie();
 export const loginHandler = (userData) => {
   return (dispatch) => {
     const { username, password } = userData;
-
     Axios.get(`${API_URL}/users`, {
       params: {
         username,
@@ -23,8 +22,8 @@ export const loginHandler = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
+          alert("masuk")
         } else {
-          alert("masuk");
           dispatch({
             type: ON_LOGIN_FAIL,
             payload: "Username atau password salah",
