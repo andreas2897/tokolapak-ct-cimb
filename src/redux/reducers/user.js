@@ -9,6 +9,7 @@ const init_state = {
   address: {},
   role: "",
   errMsg: "",
+  option: "",
 };
 
 export default (state = init_state, action) => {
@@ -24,6 +25,10 @@ export default (state = init_state, action) => {
       };
     case ON_LOGIN_FAIL:
       return { ...state, errMsg: action.payload };
+    case "ON_CHANGE_LOGIN":
+      return { ...state, option: action.payload };
+    case "ON_CHANGE_REGISTER":
+      return { ...state, option: action.payload };
     case "ON_REGISTER_FAIL":
       return { ...state, errMsg: action.payload };
     case ON_LOGOUT_SUCCESS:
