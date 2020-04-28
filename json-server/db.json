@@ -6,9 +6,24 @@
       "id": 1
     },
     {
+<<<<<<< HEAD
       "username": "",
       "password": "",
       "id": 2
+=======
+      "username": "doraemon",
+      "fullName": "Dora Emon",
+      "password": "password",
+      "email": "doraemon@mail.com",
+      "id": 2
+    },
+    {
+      "username": "pikachu",
+      "fullName": "Dora Emon",
+      "password": "password",
+      "email": "doraemon@mail.com",
+      "id": 3
+>>>>>>> b3541bf0b53fdcd6b4cf9d0a81cc8863434e3324
     }
   ]
 }

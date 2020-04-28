@@ -1,4 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Cookies from "universal-cookie";
+
 import TextField from "../../components/TextField/TextField";
 import ButtonUI from "../../components/Button/Button";
 import { connect } from "react-redux";
@@ -88,6 +92,10 @@ class AuthScreen extends React.Component {
         className="mt-2"
         onChange={(e) => this.setState({ password: e.target.value })}
       />
+      <input type="checkbox" onChange={this.checkboxHandler(e, formRegister)} className="mt-3" name="showPasswordRegister" />{""}
+      Show Password
+
+
       <div className="d-flex justify-content-center">
         <ButtonUI
           type="contained"
@@ -100,6 +108,14 @@ class AuthScreen extends React.Component {
     </div>
   )
   };
+
+  checkboxHandler = (e, form) => {
+      const {checked} = e.target 
+      console.log(checked)
+      ...this.setState[form]
+      showPassword : checked
+
+  }
 
   render() {
     const { option } = this.props.user;
