@@ -20,8 +20,6 @@
       "id": 3
     }
   ],
-
-
   "products": [
     {
       "productName": "iPhone 7 Plus",
@@ -48,5 +46,4 @@
       "id": 3
     }
   ]
-
 }
