@@ -12,6 +12,7 @@ class AuthScreen extends React.Component {
   state = {
     username: "",
     password: "",
+    email: ""
   };
   loginHandler = () => {
     const { username, password } = this.state;
