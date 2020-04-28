@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 
 import TextField from "../../components/TextField/TextField";
 import ButtonUI from "../../components/Button/Button";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import {
   loginHandler,
   registerHandler,
@@ -78,22 +78,22 @@ class AuthScreen extends React.Component {
         onChange={(e) => this.setState({ username: e.target.value })}
       />
       <TextField
-        placeholder="Email"
+        placeholder="Name"
         className="mt-2"
-        onChange={(e) => this.setState({ email: e.target.value })}
+        onChange={(e) => this.setState({ name: e.target.value })}
       />
       <TextField
-        placeholder="Password"
+        placeholder="email"
         className="mt-2"
-        onChange={(e) => this.setState({ password: e.target.value })}
+        onChange={(e) => this.setState({ email: e.target.value })}
       />
       <TextField
         placeholder="Confirm password"
         className="mt-2"
         onChange={(e) => this.setState({ password: e.target.value })}
       />
-      <input type="checkbox" onChange={this.checkboxHandler(e, formRegister)} className="mt-3" name="showPasswordRegister" />{""}
-      Show Password
+      {/* <input type="checkbox" onChange={this.checkboxHandler(e, formRegister)} className="mt-3" name="showPasswordRegister" />{""}
+      Show Password */}
 
 
       <div className="d-flex justify-content-center">
@@ -109,13 +109,14 @@ class AuthScreen extends React.Component {
   )
   };
 
-  checkboxHandler = (e, form) => {
-      const {checked} = e.target 
-      console.log(checked)
-      ...this.setState[form]
-      showPassword : checked
-
-  }
+  // checkboxHandler = (e, form) => {
+  //     const {checked} = e.target 
+  //     console.log(checked)
+  //     [form] : {
+  //     ...this.setState[form]
+  //     showPassword : checked
+  //     }
+  // }
 
   render() {
     const { option } = this.props.user;
