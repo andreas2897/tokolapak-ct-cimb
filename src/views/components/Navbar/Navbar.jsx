@@ -1,12 +1,14 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
+import { connect } from "react-redux";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import ButtonUI from "../Button/Button.tsx";
+import { inherits } from "util";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -46,24 +48,49 @@ class Navbar extends React.Component {
           />
         </div>
         <div className="d-flex flex-row align-items-center">
-          {/* <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
-          <p className="small ml-3 mr-4">Profile</p>
-          <FontAwesomeIcon
-            className="mr-2"
-            icon={faShoppingCart}
-            style={{ fontSize: 24 }}
-          />
-          <CircleBg>
-            <small style={{ color: "#3C64B1", fontWeight: "bold" }}>4</small>
-          </CircleBg> */}
-          <ButtonUI className="mr-3" type="textual">
-            Sign in
-          </ButtonUI>
-          <ButtonUI type="contained">Sign up</ButtonUI>
+          {this.props.user.id ? (
+            <>
+              <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
+              <p className="small ml-3 mr-4">{this.props.user.username}</p>
+              <FontAwesomeIcon
+                className="mr-2"
+                icon={faShoppingCart}
+                style={{ fontSize: 24 }}
+              />
+              <CircleBg>
+                <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
+                  4
+                </small>
+              </CircleBg>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/auth"
+                style={{ textDecoration: "none", color: inherits }}
+              >
+                <ButtonUI className="mr-3" type="textual">
+                  Sign in
+                </ButtonUI>
+              </Link>
+              <Link
+                to="/auth"
+                style={{ textDecoration: "none", color: inherits }}
+              >
+                <ButtonUI type="contained">Sign up</ButtonUI>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     );
   }
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);

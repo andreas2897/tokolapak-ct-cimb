@@ -10,6 +10,7 @@ const init_state = {
   role: "",
   errMsg: "",
   option: "",
+  cookieChecked: false,
 };
 
 export default (state = init_state, action) => {
@@ -22,6 +23,7 @@ export default (state = init_state, action) => {
         fullName,
         role,
         id,
+        cookieChecked: true,
       };
     case ON_LOGIN_FAIL:
       return { ...state, errMsg: action.payload };
