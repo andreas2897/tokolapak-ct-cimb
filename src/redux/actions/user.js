@@ -102,19 +102,8 @@ export const registerHandler = (userData) => {
   };
 };
 
-
-export const switchLoginRegister = option => {
-  return dispatch => {
-    if (option == "login") {
-      dispatch({
-        type: "ON_CHANGE_LOGIN",
-        payload: "signin"
-      });
-    } else if (option == "register") {
-      dispatch({
-        type: "ON_CHANGE_REGISTER",
-        payload: "signup"
-      });
-    }
-  }
-}
+export const cookieChecker = () => {
+  return {
+    type: "COOKIE_CHECK",
+  };
+};
