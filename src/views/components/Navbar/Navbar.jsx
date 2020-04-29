@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
 import { connect } from "react-redux";
@@ -6,7 +9,6 @@ import { connect } from "react-redux";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
-import { Link } from "react-router-dom";
 import ButtonUI from "../Button/Button.tsx";
 import { inherits } from "util";
 
@@ -65,20 +67,22 @@ class Navbar extends React.Component {
             </>
           ) : (
             <>
-              <Link
-                to="/auth"
-                style={{ textDecoration: "none", color: inherits }}
-              >
-                <ButtonUI className="mr-3" type="textual">
+              <ButtonUI className="mr-3" type="textual">
+                <Link
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to="/auth"
+                >
                   Sign in
-                </ButtonUI>
-              </Link>
-              <Link
-                to="/auth"
-                style={{ textDecoration: "none", color: inherits }}
-              >
-                <ButtonUI type="contained">Sign up</ButtonUI>
-              </Link>
+                </Link>
+              </ButtonUI>
+              <ButtonUI type="contained">
+                <Link
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to="/auth"
+                >
+                  Sign up
+                </Link>
+              </ButtonUI>
             </>
           )}
         </div>

@@ -6,24 +6,36 @@ import { API_URL } from "../../../constants/API";
 
 class Cart extends React.Component {
   componentDidMount() {
-    Axios.get(`${API_URL}/cart`, {
+    Axios.get(`${API_URL}/carts`, {
       params: {
         userId: this.props.user.id,
         _expand: "product",
       },
     })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    // Axios.get(`${API_URL}/products/1`, {
+    //   params: {
+    //     _embed: "carts",
+    //   },
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   render() {
     return (
-      <div>
-        <div>cart</div>
+      <div className="container">
+        <div>Cart</div>
       </div>
     );
   }

@@ -9,7 +9,6 @@ const init_state = {
   address: {},
   role: "",
   errMsg: "",
-  option: "",
   cookieChecked: false,
 };
 
@@ -26,15 +25,11 @@ export default (state = init_state, action) => {
         cookieChecked: true,
       };
     case ON_LOGIN_FAIL:
-      return { ...state, errMsg: action.payload };
-    case "ON_CHANGE_LOGIN":
-      return { ...state, option: action.payload };
-    case "ON_CHANGE_REGISTER":
-      return { ...state, option: action.payload };
+      return { ...state, errMsg: action.payload, cookieChecked: true };
     case "ON_REGISTER_FAIL":
-      return { ...state, errMsg: action.payload };
+      return { ...state, errMsg: action.payload, cookieChecked: true };
     case ON_LOGOUT_SUCCESS:
-      return { ...init_state };
+      return { ...init_state, cookieChecked: true };
     default:
       return { ...state };
   }
