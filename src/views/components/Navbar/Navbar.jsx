@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
-import { connect } from "react-redux";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 

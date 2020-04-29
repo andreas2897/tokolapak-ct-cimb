@@ -60,16 +60,22 @@
       "id": 2
     },
     {
-      "userId": 1,
-      "productId": 1,
+      "userId": 3,
+      "productId": 3,
       "quantity": 1,
-      "id": 3
+      "id": 9
     },
     {
-      "userId": 1,
-      "productId": 1,
+      "userId": 3,
+      "productId": 2,
       "quantity": 1,
-      "id": 4
+      "id": 11
+    },
+    {
+      "userId": 3,
+      "productId": 2,
+      "quantity": 1,
+      "id": 12
     }
   ]
 }
