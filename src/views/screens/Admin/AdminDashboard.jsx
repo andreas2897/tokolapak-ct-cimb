@@ -17,9 +17,10 @@ class AdminDashboard extends React.Component {
       desc: "",
     },
     editForm: {
+      id: 0,
       productName: "",
       price: 0,
-      category: "Phone",
+      category: "",
       image: "",
       desc: "",
     },
@@ -35,23 +36,8 @@ class AdminDashboard extends React.Component {
       });
   };
 
-  createProductHandler = () => {
-    Axios.post(`${API_URL}/products`, this.state.createForm)
-      .then((res) => {
-        swal("Success", "Your item has been added", "success");
-        this.getProductList();
-      })
-      .catch((err) => {
-        swal("Error!", "your item not added", "error");
-      });
-  };
-
-  componentDidMount() {
-    this.getProductList();
-  }
-
   renderProductList = () => {
-    return this.state.productList.map((val) => {
+    return this.state.productList.map((val, idx) => {
       const { id, productName, price, category, image, desc } = val;
       return (
         <tr>
@@ -69,7 +55,9 @@ class AdminDashboard extends React.Component {
           </td>
           <td> {desc} </td>
           <td>
-            <ButtonUI type="contained">Edit</ButtonUI>
+            <ButtonUI onClick={() => this.editBtnHandler(idx)} type="contained">
+              Edit
+            </ButtonUI>
           </td>
           <td>
             <ButtonUI type="outlined">Delete</ButtonUI>
@@ -89,14 +77,59 @@ class AdminDashboard extends React.Component {
     });
   };
 
-  editBtnHandler = () => {};
+  createProductHandler = () => {
+    Axios.post(`${API_URL}/products`, this.state.createForm)
+      .then((res) => {
+        swal("Success!", "Your item has been added to the list", "success");
+        this.setState({
+          createForm: {
+            productName: "",
+            price: 0,
+            category: "Phone",
+            image: "",
+            desc: "",
+          },
+        });
+        this.getProductList();
+      })
+      .catch((err) => {
+        swal("Error!", "Your item could not be added to the list", "error");
+      });
+  };
+
+  editBtnHandler = (idx) => {
+    this.setState({
+      editForm: {
+        ...this.state.productList[idx],
+      },
+    });
+  };
+
+  editProductHandler = () => {
+    Axios.put(
+      `${API_URL}/products/${this.state.editForm.id}`,
+      this.state.editForm
+    )
+      .then((res) => {
+        swal("Success!", "Your item has been edited", "success");
+        this.getProductList();
+      })
+      .catch((err) => {
+        swal("Error!", "Your item could not be edited", "error");
+        console.log(err);
+      });
+  };
+
+  componentDidMount() {
+    this.getProductList();
+  }
 
   render() {
     return (
       <div className="container py-4">
         <Table>
           <thead>
-            <tr>
+            <tr className="text-center">
               <th>ID</th>
               <th>Name</th>
               <th>Price</th>
@@ -111,6 +144,7 @@ class AdminDashboard extends React.Component {
             <tr>
               <td colSpan={2}>
                 <TextField
+                  value={this.state.createForm.productName}
                   onChange={(e) =>
                     this.inputHandler(e, "productName", "createForm")
                   }
@@ -119,12 +153,14 @@ class AdminDashboard extends React.Component {
               </td>
               <td>
                 <TextField
+                  value={this.state.createForm.price}
                   onChange={(e) => this.inputHandler(e, "price", "createForm")}
                   placeholder="Price"
                 />
               </td>
               <td colSpan={2}>
                 <select
+                  value={this.state.createForm.category}
                   onChange={(e) =>
                     this.inputHandler(e, "category", "createForm")
                   }
@@ -138,12 +174,14 @@ class AdminDashboard extends React.Component {
               </td>
               <td>
                 <TextField
+                  value={this.state.createForm.image}
                   onChange={(e) => this.inputHandler(e, "image", "createForm")}
                   placeholder="Image"
                 />
               </td>
-              <td>
+              <td colSpan={2}>
                 <TextField
+                  value={this.state.createForm.desc}
                   onChange={(e) => this.inputHandler(e, "desc", "createForm")}
                   placeholder="Description"
                 />
@@ -160,6 +198,7 @@ class AdminDashboard extends React.Component {
             <tr>
               <td colSpan={2}>
                 <TextField
+                  value={this.state.editForm.productName}
                   onChange={(e) =>
                     this.inputHandler(e, "productName", "editForm")
                   }
@@ -168,12 +207,14 @@ class AdminDashboard extends React.Component {
               </td>
               <td>
                 <TextField
+                  value={this.state.editForm.price}
                   onChange={(e) => this.inputHandler(e, "price", "editForm")}
                   placeholder="Price"
                 />
               </td>
               <td colSpan={2}>
                 <select
+                  value={this.state.editForm.category}
                   onChange={(e) => this.inputHandler(e, "category", "editForm")}
                   className="form-control"
                 >
@@ -185,12 +226,14 @@ class AdminDashboard extends React.Component {
               </td>
               <td>
                 <TextField
+                  value={this.state.editForm.image}
                   onChange={(e) => this.inputHandler(e, "image", "editForm")}
                   placeholder="Image"
                 />
               </td>
-              <td>
+              <td colSpan={2}>
                 <TextField
+                  value={this.state.editForm.desc}
                   onChange={(e) => this.inputHandler(e, "desc", "editForm")}
                   placeholder="Description"
                 />
@@ -199,7 +242,9 @@ class AdminDashboard extends React.Component {
             <tr>
               <td colSpan={7}></td>
               <td colSpan={1}>
-                <ButtonUI type="contained">save</ButtonUI>
+                <ButtonUI onClick={this.editProductHandler} type="contained">
+                  Save
+                </ButtonUI>
               </td>
             </tr>
           </tfoot>
