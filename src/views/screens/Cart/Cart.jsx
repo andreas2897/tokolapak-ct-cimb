@@ -4,6 +4,7 @@ import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
+import { Table, Alert } from "reactstrap";
 
 class Cart extends React.Component {
   state = {
@@ -11,8 +12,6 @@ class Cart extends React.Component {
   };
 
   componentDidMount() {
-    
-
     // Axios.get(`${API_URL}/products/1`, {
     //   params: {
     //     _embed: "carts",
@@ -24,7 +23,7 @@ class Cart extends React.Component {
     //   .catch((err) => {
     //     console.log(err);
     //   });
-    this.renderData()
+    this.renderData();
   }
 
   renderData = () => {
@@ -41,28 +40,28 @@ class Cart extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   renderTable = () => {
     return this.state.dataCart.map((val, idx) => {
       return (
         <tr key={`dataCart-${val.product.id}`}>
-          <th>{idx + 1}</th>
-          <th>{val.product.productName}</th>
-          <th>{val.product.price}</th>
-          <th>{val.product.category}</th>
-          <th>{val.product.desc}</th>
-          <th>
+          <td>{idx + 1}</td>
+          <td>{val.product.productName}</td>
+          <td>{val.product.price}</td>
+          <td>{val.product.category}</td>
+          <td>{val.product.desc}</td>
+          <td>
             <img src={val.product.image} width="80" />
-          </th>
-          <th>
+          </td>
+          <td>
             <ButtonUI
               onClick={() => this.deleteCart(val.id)}
               style={{ backgroundColor: "red" }}
             >
               Delete
             </ButtonUI>
-          </th>
+          </td>
         </tr>
       );
     });
@@ -72,8 +71,8 @@ class Cart extends React.Component {
     Axios.delete(`${API_URL}/carts/${idx}`)
       .then((res) => {
         console.log(res.data);
-        alert("sudah terhapus")
-        this.renderData()
+        alert("sudah terhapus");
+        this.renderData();
       })
       .catch((err) => {
         console.log(err);
@@ -83,7 +82,10 @@ class Cart extends React.Component {
   render() {
     return (
       <div className="container">
-        <table className="table ">
+
+      {this.state.dataCart.length > 0 ? {
+        
+       <Table>
           <thead>
             <tr>
               <th>No.</th>
@@ -96,7 +98,13 @@ class Cart extends React.Component {
             </tr>
           </thead>
           <tbody>{this.renderTable()}</tbody>
-        </table>
+        <Table/>
+      } : {
+        <Alert>
+        your cart is empty <Link >go shopping</Link>
+        </Alert>
+      }}
+
       </div>
     );
   }
