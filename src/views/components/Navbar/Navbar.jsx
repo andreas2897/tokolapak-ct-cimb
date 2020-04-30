@@ -53,17 +53,21 @@ class Navbar extends React.Component {
             <>
               <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
               <p className="small ml-3 mr-4">{this.props.user.username}</p>
-              <Link>
-              <FontAwesomeIcon
-                className="mr-2"
-                icon={faShoppingCart}
-                style={{ fontSize: 24 }}
-              />
-              <CircleBg>
-                <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                  4
-                </small>
-              </CircleBg>
+              <Link
+                className="d-flex flex-row"
+                to="/cart"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <FontAwesomeIcon
+                  className="mr-2"
+                  icon={faShoppingCart}
+                  style={{ fontSize: 24 }}
+                />
+                <CircleBg>
+                  <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
+                    4
+                  </small>
+                </CircleBg>
               </Link>
             </>
           ) : (
