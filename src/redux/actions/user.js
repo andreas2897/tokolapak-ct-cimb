@@ -22,7 +22,7 @@ export const loginHandler = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
-          alert("masuk")
+          alert("masuk");
         } else {
           dispatch({
             type: ON_LOGIN_FAIL,
@@ -83,7 +83,7 @@ export const registerHandler = (userData) => {
             payload: "Username sudah digunakan",
           });
         } else {
-          Axios.post(`${API_URL}/users`, userData)
+          Axios.post(`${API_URL}/users`, { ...userData, role: "user" })
             .then((res) => {
               console.log(res.data);
               dispatch({
