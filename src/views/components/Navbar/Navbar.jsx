@@ -14,13 +14,8 @@ import {
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
-<<<<<<< HEAD
-import ButtonUI from "../Button/Button.tsx";
-import { inherits } from "util";
-=======
 import ButtonUI from "../Button/Button";
-import { logoutHandler } from "../../../redux/actions";
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
+import { logoutHandler, searchProduct } from "../../../redux/actions";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -70,6 +65,9 @@ class Navbar extends React.Component {
             }`}
             type="text"
             placeholder="Cari produk impianmu disini"
+            onChange={(e) => {
+              this.props.searchProduct(e.target.value);
+            }}
           />
         </div>
         <div className="d-flex flex-row align-items-center">
@@ -154,6 +152,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   onLogout: logoutHandler,
+  searchProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

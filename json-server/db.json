@@ -34,7 +34,7 @@
     {
       "productName": "iPhone 7 +",
       "price": 5000000,
-      "category": "Tab",
+      "category": "Phone",
       "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
       "desc": "HP Terbaikk loh",
       "id": 1
@@ -107,30 +107,6 @@
   ],
   "carts": [
     {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 1
-    },
-    {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 2
-    },
-    {
-      "userId": 3,
-      "productId": 3,
-      "quantity": 1,
-      "id": 3
-    },
-    {
-      "userId": 0,
-      "productId": 1,
-      "quantity": 1,
-      "id": 4
-    },
-    {
       "userId": 4,
       "productId": 1,
       "quantity": 1,
@@ -141,6 +117,25 @@
       "productId": 1,
       "quantity": 1,
       "id": 6
+    }
+  ],
+  "transactions": [
+    {
+      "userId": 2,
+      "totalPrice": 90000000,
+      "status": "pending",
+      "items": [
+        {
+          "productName": "iPad Pro 3",
+          "price": 15000000,
+          "category": "Tab",
+          "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
+          "desc": "HP Terbaikk loh",
+          "id": 2,
+          "quantity": 6
+        }
+      ],
+      "id": 1
     }
   ]
 }
