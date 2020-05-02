@@ -78,7 +78,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
  * 1. Add to cart, jika barang double, qty yg akan bertambah (done)
  * 2. Di Home, ketika click PHONE/LAPTOP/TAB/DESKTOP (done)
  * 3. Di navbar, ketika ketik, secara otomatis filter products (done)
- * 4. Di cart, buat button checkout, serta dengan proses checkout
+ * 4. Di cart, buat button checkout, serta dengan proses checkout (done)
  * 5. Ketika confirm checkout, lakukan POST request ke db.json ke transaction
- *    -> lalu cart harus kosong
+ *    -> lalu cart harus kosong (done)
  */
