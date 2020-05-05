@@ -66,6 +66,10 @@ class Navbar extends React.Component {
         console.log(err);
       });
   };
+  componentDidUpdate() {
+    alert("hiya");
+    this.cartCountHandler();
+  }
 
   componentDidMount() {
     this.cartCountHandler();
@@ -117,12 +121,14 @@ class Navbar extends React.Component {
                         Dashboard
                       </Link>
                     </DropdownItem>
-                    <DropdownItem><Link
+                    <DropdownItem>
+                      <Link
                         style={{ color: "inherit", textDecoration: "none" }}
                         to="/admin/member"
                       >
                         Members
-                      </Link></DropdownItem>
+                      </Link>
+                    </DropdownItem>
                     <DropdownItem>Payments</DropdownItem>
                   </DropdownMenu>
                 ) : (
