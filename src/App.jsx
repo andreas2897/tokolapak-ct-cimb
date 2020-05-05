@@ -12,6 +12,7 @@ import AuthScreen from "./views/screens/Auth/AuthScreen";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
+import AdminMember from "./views/screens/Admin/AdminMember";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
 
 const cookieObj = new Cookie();
@@ -19,7 +20,7 @@ const cookieObj = new Cookie();
 class App extends React.Component {
   componentDidMount() {
     setTimeout(() => {
-      let cookieResult = cookieObj.get("authData");
+      let cookieResult = cookieObj.get("authData", { path: "/" });
       if (cookieResult) {
         this.props.keepLogin(cookieResult);
       } else {
@@ -30,7 +31,12 @@ class App extends React.Component {
 
   renderAdminRoutes = () => {
     if (this.props.user.role === "admin") {
-      return <Route exact path="/admin/dashboard" component={AdminDashboard} />;
+      return (
+        <>
+          <Route exact path="/admin/dashboard" component={AdminDashboard} />
+          <Route exact path="/admin/member" component={AdminMember} />
+        </>
+      );
     }
   };
 
@@ -82,3 +88,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
  * 5. Ketika confirm checkout, lakukan POST request ke db.json ke transaction
  *    -> lalu cart harus kosong (done)
  */
+
+// * TRANSACTIONS
+// * userId
+// * total belanja
+// * status -> "pending"
+// * tanggal belanja
+// * tanggal selesai -> ""
+// *
+// * TRANSACTION_DETAILS
+// * transactionId
+// * productId
+// * price
+// * quantity
+// * totalPrice (price * quantity)
+
+// buat besok :
+// admin Payment

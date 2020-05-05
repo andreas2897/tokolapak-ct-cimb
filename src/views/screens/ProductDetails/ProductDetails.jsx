@@ -30,7 +30,6 @@ class ProductDetails extends React.Component {
       productId: this.state.productData.id,
     })
       .then((res) => {
-        alert(res.data.length);
         if (res.data.length > 1) {
           Axios.patch(`${API_URL}/carts/${res.data[0].id}`, {
             quantity: res.data[0].quantity + 1,
@@ -49,7 +48,7 @@ class ProductDetails extends React.Component {
         } else {
           Axios.post(`${API_URL}/carts`, {
             userId: this.props.user.id,
-            productId: this.state.product.id,
+            productId: this.state.productData.id,
             quantity: 1,
           })
             .then((res) => {
@@ -82,14 +81,7 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const {
-      productName,
-      image,
-      price,
-      desc,
-      category,
-      id,
-    } = this.state.productData;
+    const { productName, image, price, desc } = this.state.productData;
     return (
       <div className="container">
         <div className="row py-4">

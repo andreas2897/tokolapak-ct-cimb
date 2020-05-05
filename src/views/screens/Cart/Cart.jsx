@@ -8,9 +8,11 @@ import { Table, Alert } from "reactstrap";
 import { Link } from "react-router-dom";
 import TextField from "../../components/TextField/TextField";
 import swal from "sweetalert";
+
 class Cart extends React.Component {
   state = {
     cartData: [],
+    checkOutItem: [],
     kondisiTransaksi: false,
     totalPrice: 0,
   };
@@ -50,10 +52,23 @@ class Cart extends React.Component {
         <tr key={`cartData-${id}`}>
           <td>{idx + 1}</td>
           <td>{productName}</td>
-          <td>{price}</td>
+          <td>
+            {" "}
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(price)}
+          </td>
           <td>{quantity}</td>
           <td>
             <img src={image} width="80" />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              className="form-control"
+              onChange={(e) => this.checkboxHandler(e, idx)}
+            />
           </td>
           <td>
             <ButtonUI
@@ -82,12 +97,22 @@ class Cart extends React.Component {
         <tr key={`cartData-${id}`}>
           <td>{idx + 1}</td>
           <td>{productName}</td>
-          <td>{price}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(price)}
+          </td>
           <td>{quantity}</td>
           <td>
             <img src={image} width="80" />
           </td>
-          <td>{quantity * price}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(quantity * price)}
+          </td>
         </tr>
       );
     });
@@ -99,27 +124,48 @@ class Cart extends React.Component {
       userId: this.props.user.id,
       totalPrice,
       status: "pending",
-      items: cartData.map((val) => {
-        return { ...val.product, quantity: val.quantity };
-      }),
+      // items: cartData.map((val) => {
+      //   return { ...val.product, quantity: val.quantity };
+      // }),
     };
+
     Axios.post(`${API_URL}/transactions`, dataTransaksi)
       .then((res) => {
         this.state.cartData.map((val) => {
-          Axios.delete(`${API_URL}/carts/${val.id}`)
+          Axios.post(`${API_URL}/transactionsDetail`, {
+            productId: val.product.id,
+            price: val.product.price,
+            totalPrice: val.product.price * val.quantity,
+            quantity: val.quantity,
+            transactionId: res.data.id,
+          })
             .then((res) => {
-              console.log("berhasil belanja");
-              swal("Nuhun!", "Your Transactions Has Been Completed", "success");
-              this.addCart();
+              console.log(res);
+              this.state.cartData.map((val) => {
+                Axios.delete(`${API_URL}/carts/${val.id}`)
+                  .then((res) => {
+                    console.log(res);
+                    swal(
+                      "success",
+                      "Your transaction has been completed",
+                      "success"
+                    );
+                    this.addCart();
+                  })
+                  .catch((err) => {
+                    alert("eror");
+                    console.log(err);
+                  });
+              });
             })
             .catch((err) => {
               console.log(err);
             });
         });
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
-        alert("error");
       });
   };
   deleteCart = (id) => {
@@ -139,6 +185,18 @@ class Cart extends React.Component {
         console.log(err);
       });
   };
+
+  checkboxHandler = (e, idx) => {
+    const { checked } = e.target;
+    if (checked) {
+      this.setState({ checkOutItem: [...this.state.checkOutItem, idx] });
+    } else {
+      this.setState({
+        checkOutItem: [...this.state.checkOutItem.filter((val) => val !== idx)],
+      });
+    }
+  };
+
   render() {
     return (
       <div className="container py-4">
@@ -179,7 +237,11 @@ class Cart extends React.Component {
                 <div className="d-flex flex-column">
                   <center>
                     <h4 className="mb-4">
-                      Total Belanja Anda Adalah: {this.state.totalPrice}
+                      Total Belanja Anda Adalah:{" "}
+                      {new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(this.state.totalPrice)}
                     </h4>
                     <ButtonUI onClick={this.confirmTransaksi} type="outlined">
                       Confirm
