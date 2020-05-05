@@ -4,6 +4,7 @@ import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
 import swal from "sweetalert";
+import { Table, Alert } from "reactstrap";
 
 class AdminPayment extends React.Component {
   state = {
@@ -12,6 +13,7 @@ class AdminPayment extends React.Component {
     productListAccept: [],
     datePayment: new Date(),
     activeProducts: [],
+    windowDetail: false,
   };
 
   renderPaymentList = () => {
@@ -188,6 +190,12 @@ class AdminPayment extends React.Component {
       });
   };
 
+  detailHandler = (id) => {
+    const { transactionsDetail } = this.state.dataList[id];
+    this.setState({ productList: transactionsDetail });
+    this.setState({ windowDetail: true });
+  };
+
   render() {
     return (
       <div className="container">
@@ -212,11 +220,31 @@ class AdminPayment extends React.Component {
               >
                 Accept
               </ButtonUI>
+              <ButtonUI onClick={(_) => this.detailHandler()} type="contained">
+                Details
+              </ButtonUI>
             </div>
 
             {this.renderAuthComponent()}
           </div>
         </div>
+        {!this.state.windowDetail ? null : (
+          <>
+            <h4>Detail History</h4>
+            <Table style={{ marginTop: "10px" }}>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>{this.renderDetail()}</tbody>
+            </Table>
+          </>
+        )}
       </div>
     );
   }

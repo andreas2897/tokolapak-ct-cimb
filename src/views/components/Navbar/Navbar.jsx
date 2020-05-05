@@ -67,7 +67,6 @@ class Navbar extends React.Component {
       });
   };
   componentDidUpdate() {
-    alert("hiya");
     this.cartCountHandler();
   }
 
