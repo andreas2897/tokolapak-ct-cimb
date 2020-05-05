@@ -160,7 +160,6 @@ class Cart extends React.Component {
                       this.addCart();
                     })
                     .catch((err) => {
-                      alert("eror");
                       console.log(err);
                     });
                 });

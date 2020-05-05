@@ -5,13 +5,14 @@ import ButtonUI from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
 import swal from "sweetalert";
 import { connect } from "react-redux";
+import { Table, Alert } from "reactstrap";
 
 class HistoryTransaction extends React.Component {
   state = {
     productList: [],
+    dataList: [],
     datePayment: new Date(),
-    activeProducts: [],
-    kondisiTransaksi: false,
+    windowDetail: false,
   };
 
   getPaymentList = () => {
@@ -23,37 +24,41 @@ class HistoryTransaction extends React.Component {
       },
     })
       .then((res) => {
-        this.setState({ productList: res.data });
+        this.setState({ dataList: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  detailHandler = (id) => {};
+  detailHandler = (id) => {
+    const { transactionsDetail } = this.state.dataList[id];
+    this.setState({ productList: transactionsDetail });
+    this.setState({ windowDetail: true });
+  };
 
   componentDidMount() {
     this.getPaymentList();
   }
 
   renderPaymentList = () => {
-    return this.state.productList.map((val, idx) => {
+    return this.state.dataList.map((val, idx) => {
       const { id, totalPrice, status } = val;
       return (
         <>
           <tr>
             <td>{idx + 1}</td>
             <td> {id} </td>
-            <td> {status} </td>
             <td>
               {new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
               }).format(totalPrice)}{" "}
             </td>
+            <td> {status} </td>
             <td>
               <ButtonUI
-                onClick={(_) => this.detailHandler(id)}
+                onClick={(_) => this.detailHandler(idx)}
                 type="contained"
               >
                 Details
@@ -67,6 +72,31 @@ class HistoryTransaction extends React.Component {
       );
     });
   };
+
+  renderDetail = () => {
+    return this.state.productList.map((val, idx) => {
+      return (
+        <tr>
+          <td>{idx + 1}</td>
+          <td>{val.id}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(val.price)}{" "}
+          </td>
+          <td>{val.quantity}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(val.totalPrice)}{" "}
+          </td>
+        </tr>
+      );
+    });
+  };
+
   render() {
     return (
       <div className="container py-4">
@@ -79,14 +109,31 @@ class HistoryTransaction extends React.Component {
               <tr>
                 <th>No</th>
                 <th>ID</th>
-                <th>Status</th>
                 <th>Price</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>{this.renderPaymentList()}</tbody>
           </table>
         </div>
+        {!this.state.windowDetail ? null : (
+          <>
+            <h4>Detail History</h4>
+            <Table style={{ marginTop: "10px" }}>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>{this.renderDetail()}</tbody>
+            </Table>
+          </>
+        )}
       </div>
     );
   }

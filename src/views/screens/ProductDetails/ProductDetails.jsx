@@ -21,24 +21,24 @@ class ProductDetails extends React.Component {
   };
 
   addToCartHandler = () => {
-    // POST method ke /cart
-    // Isinya: userId, productId, quantity
-    // console.log(this.props.user.id);
-    // console.log(this.state.productData.id);
     Axios.get(`${API_URL}/carts`, {
-      userId: this.props.user.id,
-      productId: this.state.productData.id,
+      params: {
+        userId: this.props.user.id,
+        productId: this.state.productData.id,
+      },
     })
       .then((res) => {
-        if (res.data.length > 1) {
-          Axios.patch(`${API_URL}/carts/${res.data[0].id}`, {
-            quantity: res.data[0].quantity + 1,
+        if (res.data.length == 0) {
+          Axios.post(`${API_URL}/carts`, {
+            userId: this.props.user.id,
+            productId: this.state.productData.id,
+            quantity: 1,
           })
             .then((res) => {
-              console.log(res);
+              console.log(res.data);
               swal(
                 "Add to cart",
-                "Your item has been added 1 more to your cart",
+                "your item has been added to cart",
                 "success"
               );
             })
@@ -46,18 +46,16 @@ class ProductDetails extends React.Component {
               console.log(err);
             });
         } else {
-          Axios.post(`${API_URL}/carts`, {
-            userId: this.props.user.id,
-            productId: this.state.productData.id,
-            quantity: 1,
+          Axios.patch(`${API_URL}/carts/${res.data[0].id}`, {
+            quantity: res.data[0].quantity + 1,
           })
             .then((res) => {
+              console.log(res.data);
               swal(
                 "Add to cart",
-                "Your item has been added to your cart",
+                "your item has been added to cart",
                 "success"
               );
-              console.log(res);
             })
             .catch((err) => {
               console.log(err);
@@ -65,7 +63,6 @@ class ProductDetails extends React.Component {
         }
       })
       .catch((err) => {
-        //catch punya si axios.get
         console.log(err);
       });
   };

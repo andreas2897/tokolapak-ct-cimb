@@ -17,6 +17,7 @@ import AdminPayment from "./views/screens/Admin/AdminPayment";
 import History from "./views/screens/History/HistoryTransaction";
 import PageNotFound from "./views/screens/PageNotFound";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+import AdminReport from "./views/screens/Admin/AdminReport";
 
 const cookieObj = new Cookie();
 
@@ -39,6 +40,7 @@ class App extends React.Component {
           <Route exact path="/admin/dashboard" component={AdminDashboard} />
           <Route exact path="/admin/member" component={AdminMember} />
           <Route exact path="/admin/payment" component={AdminPayment} />
+          <Route exact path="/admin/report" component={AdminReport} />
         </>
       );
     }
@@ -59,6 +61,7 @@ class App extends React.Component {
             />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/history" component={History} />
+
             {this.renderAdminRoutes()}
             <Route exact path="*" component={PageNotFound} />
             {/* <Route path="*" component={} /> */}
