@@ -13,6 +13,7 @@ class HistoryTransaction extends React.Component {
     activeProducts: [],
     kondisiTransaksi: false,
   };
+
   getPaymentList = () => {
     Axios.get(`${API_URL}/transactions`, {
       params: {
@@ -28,98 +29,23 @@ class HistoryTransaction extends React.Component {
         console.log(err);
       });
   };
-  // paymentBtnHandler = (idx) => {
-  //   this.setState({
-  //     editForm: {
-  //       ...this.state.productList[idx],
-  //     },
-  //   });
-  // };
-  confirmPaymentHandler = (id) => {
-    // Axios.put(
-    //   `${API_URL}/transactions/${this.state.editForm.id}`,
-    //   this.state.editForm
-    // )
-    console.log(id);
-    Axios.patch(`${API_URL}/transactions/${id}`, {
-      status: "SUDAH DIBAYAR",
-      dateDone: this.state.datePayment.toLocaleDateString(),
-    })
-      .then((res) => {
-        swal("Success!", "Your item has been edited", "success");
-        this.getPaymentList();
-      })
-      .catch((err) => {
-        swal("Error!", "Your item could not be edited", "error");
-        console.log(err);
-      });
-  };
+
+  detailHandler = (id) => {};
+
   componentDidMount() {
     this.getPaymentList();
   }
 
-  transaksiCart = () => {
-    this.setState({
-      kondisiTransaksi: true,
-    });
-  };
-
-  renderTraksaksi = () => {
-    return this.state.cartData.map((val, idx) => {
-      const { quantity, product, id } = val;
-      const { productName, price, image } = product;
-      return (
-        <tr key={`cartData-${id}`}>
-          <td>{idx + 1}</td>
-          <td>{productName}</td>
-          <td>
-            {new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }).format(price)}
-          </td>
-          <td>{quantity}</td>
-          <td>
-            <img src={image} width="80" />
-          </td>
-          <td>
-            {new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }).format(quantity * price + +this.state.ongkir)}
-          </td>
-        </tr>
-      );
-    });
-  };
-
   renderPaymentList = () => {
     return this.state.productList.map((val, idx) => {
-      const { id, totalPrice, status, transactionDate, dateDone } = val;
+      const { id, totalPrice, status } = val;
       return (
         <>
-          <tr
-          // onClick={() => {
-          //   if (this.state.includes(idx)) {
-          //     this.setState({
-          //       activeProducts: [
-          //         ...this.state.filter((item) => item !== idx),
-          //       ],
-          //     });
-          //   } else {
-          //     this.setState({
-          //       activeProducts: [...this.state, idx],
-          //     });
-          //   }
-          // }}
-          >
+          <tr>
             <td>{idx + 1}</td>
             <td> {id} </td>
-
             <td> {status} </td>
-
             <td>
-              {" "}
               {new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
@@ -127,18 +53,14 @@ class HistoryTransaction extends React.Component {
             </td>
             <td>
               <ButtonUI
-                onClick={(_) => this.confirmPaymentHandler(id)}
+                onClick={(_) => this.detailHandler(id)}
                 type="contained"
               >
-                Confirm Payment
+                Details
               </ButtonUI>
             </td>
           </tr>
-          <tr
-          // className={`collapse-item ${
-          //   this.state.includes(idx) ? "active" : null
-          // }`}
-          >
+          <tr>
             <div className="d-flex flex-column align-items-center"></div>
           </tr>
         </>
@@ -150,16 +72,14 @@ class HistoryTransaction extends React.Component {
       <div className="container py-4">
         <div className="dashboard">
           <caption className="p-3">
-            <h2>TRANSACTIONS</h2>
+            <h2>History</h2>
           </caption>
           <table className="dashboard-table">
             <thead>
               <tr>
                 <th>No</th>
                 <th>ID</th>
-
                 <th>Status</th>
-
                 <th>Price</th>
                 <th>Action</th>
               </tr>

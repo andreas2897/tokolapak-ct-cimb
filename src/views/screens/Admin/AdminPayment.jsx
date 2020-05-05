@@ -172,10 +172,6 @@ class AdminPayment extends React.Component {
   }
 
   confirmPaymentHandler = (id) => {
-    // Axios.put(
-    //   `${API_URL}/transactions/${this.state.editForm.id}`,
-    //   this.state.editForm
-    // )
     console.log(id);
     Axios.patch(`${API_URL}/transactions/${id}`, {
       status: "SUDAH DIBAYAR",
