@@ -176,7 +176,7 @@ class AdminMember extends React.Component {
       <div className="container py-4">
         <div className="dashboard">
           <caption className="p-3">
-            <h2>Products</h2>
+            <h2>Members</h2>
           </caption>
           <table className="dashboard-table">
             <thead>
@@ -280,7 +280,7 @@ class AdminMember extends React.Component {
               </div>
               <div className="col-6 mt-3">
                 <TextField
-                    value={this.state.editForm.email}
+                  value={this.state.editForm.email}
                   placeholder="Email"
                   onChange={(e) => this.inputHandler(e, "email", "editForm")}
                 />
@@ -293,7 +293,6 @@ class AdminMember extends React.Component {
                 >
                   <option value="admin">admin</option>
                   <option value="user">user</option>
-                  
                 </select>
               </div>
               <div className="col-12 text-center my-3">

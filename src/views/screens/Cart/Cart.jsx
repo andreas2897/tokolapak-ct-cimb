@@ -14,6 +14,7 @@ class Cart extends React.Component {
     cartData: [],
     checkOutItem: [],
     kondisiTransaksi: false,
+    ongkir: 0,
     totalPrice: 0,
   };
   componentDidMount() {
@@ -84,8 +85,17 @@ class Cart extends React.Component {
   };
 
   transaksiCart = () => {
+    // alert(this.state.ongkir);
     this.setState({
       kondisiTransaksi: true,
+      // totalPrice: +this.state.ongkir,
+    });
+  };
+
+  inputHandler = (e, field) => {
+    let { value } = e.target;
+    this.setState({
+      [field]: value,
     });
   };
 
@@ -111,7 +121,7 @@ class Cart extends React.Component {
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
-            }).format(quantity * price)}
+            }).format(quantity * price + +this.state.ongkir)}
           </td>
         </tr>
       );
@@ -120,53 +130,51 @@ class Cart extends React.Component {
 
   confirmTransaksi = () => {
     const { totalPrice, cartData } = this.state;
-    const dataTransaksi = {
-      userId: this.props.user.id,
-      totalPrice,
-      status: "pending",
-      // items: cartData.map((val) => {
-      //   return { ...val.product, quantity: val.quantity };
-      // }),
-    };
-
-    Axios.post(`${API_URL}/transactions`, dataTransaksi)
-      .then((res) => {
-        this.state.cartData.map((val) => {
-          Axios.post(`${API_URL}/transactionsDetail`, {
-            productId: val.product.id,
-            price: val.product.price,
-            totalPrice: val.product.price * val.quantity,
-            quantity: val.quantity,
-            transactionId: res.data.id,
-          })
-            .then((res) => {
-              console.log(res);
-              this.state.cartData.map((val) => {
-                Axios.delete(`${API_URL}/carts/${val.id}`)
-                  .then((res) => {
-                    console.log(res);
-                    swal(
-                      "success",
-                      "Your transaction has been completed",
-                      "success"
-                    );
-                    this.addCart();
-                  })
-                  .catch((err) => {
-                    alert("eror");
-                    console.log(err);
-                  });
-              });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-        console.log(res);
+    this.state.cartData.map((val) => {
+      Axios.post(`${API_URL}/transactions`, {
+        userId: this.props.user.id,
+        totalPrice: val.product.price * val.quantity + +this.state.ongkir,
+        status: "pending",
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          alert(this.state.totalPrice);
+          this.state.cartData.map((val) => {
+            Axios.post(`${API_URL}/transactionsDetail`, {
+              productId: val.product.id,
+              price: val.product.price,
+              totalPrice: val.product.price * val.quantity + +this.state.ongkir,
+              quantity: val.quantity,
+              transactionId: res.data.id,
+            })
+              .then((res) => {
+                console.log(res);
+                this.state.cartData.map((val) => {
+                  Axios.delete(`${API_URL}/carts/${val.id}`)
+                    .then((res) => {
+                      console.log(res);
+                      swal(
+                        "success",
+                        "Your transaction has been completed",
+                        "success"
+                      );
+                      this.addCart();
+                    })
+                    .catch((err) => {
+                      alert("eror");
+                      console.log(err);
+                    });
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   };
   deleteCart = (id) => {
     Axios.get(`${API_URL}/carts/${id}`)
@@ -215,6 +223,18 @@ class Cart extends React.Component {
               </thead>
               <tbody>{this.renderCart()}</tbody>
             </Table>
+            <div className="col-12 mt-3">
+              <select
+                value={this.state.ongkir}
+                className="custom-text-input h-100 pl-3"
+                onChange={(e) => this.inputHandler(e, "ongkir")}
+              >
+                <option value="0">Economy</option>
+                <option value="100000">instant</option>
+                <option value="50000">Sameday</option>
+                <option value="20000">Express</option>
+              </select>
+            </div>
             <div className="d-flex justify-content-center">
               <ButtonUI onClick={this.transaksiCart}>Transaction</ButtonUI>
             </div>
@@ -236,13 +256,6 @@ class Cart extends React.Component {
                 </Table>
                 <div className="d-flex flex-column">
                   <center>
-                    <h4 className="mb-4">
-                      Total Belanja Anda Adalah:{" "}
-                      {new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      }).format(this.state.totalPrice)}
-                    </h4>
                     <ButtonUI onClick={this.confirmTransaksi} type="outlined">
                       Confirm
                     </ButtonUI>

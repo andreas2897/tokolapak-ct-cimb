@@ -106,6 +106,120 @@
     }
   ],
   "carts": [],
-  "transactions": [],
-  "transactionsDetail": []
+  "transactions": [
+    {
+      "userId": 4,
+      "totalPrice": 50300000,
+      "status": "SUDAH DIBAYAR",
+      "id": 1,
+      "dateDone": "5/5/2020"
+    },
+    {
+      "userId": 4,
+      "totalPrice": 5000000,
+      "status": "SUDAH DIBAYAR",
+      "id": 2,
+      "dateDone": "5/5/2020"
+    },
+    {
+      "userId": 4,
+      "totalPrice": 15000000,
+      "status": "SUDAH DIBAYAR",
+      "id": 3,
+      "dateDone": "5/5/2020"
+    },
+    {
+      "userId": 4,
+      "totalPrice": 50001,
+      "status": "pending",
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "totalPrice": 100001,
+      "status": "pending",
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "totalPrice": 15100000,
+      "status": "SUDAH DIBAYAR",
+      "id": 6,
+      "dateDone": "5/5/2020"
+    }
+  ],
+  "transactionsDetail": [
+    {
+      "productId": 2,
+      "price": 15000000,
+      "totalPrice": 45000000,
+      "quantity": 3,
+      "transactionId": 1,
+      "id": 1
+    },
+    {
+      "productId": 9,
+      "price": "5300000",
+      "totalPrice": 5300000,
+      "quantity": 1,
+      "transactionId": 1,
+      "id": 2
+    },
+    {
+      "productId": 1,
+      "price": 5000000,
+      "totalPrice": 5000000,
+      "quantity": 1,
+      "transactionId": 2,
+      "id": 3
+    },
+    {
+      "productId": 2,
+      "price": 15000000,
+      "totalPrice": 15050000,
+      "quantity": 1,
+      "transactionId": 3,
+      "id": 4
+    },
+    {
+      "productId": 2,
+      "price": 15000000,
+      "totalPrice": 15050001,
+      "quantity": 1,
+      "transactionId": 4,
+      "id": 5
+    },
+    {
+      "productId": 3,
+      "price": 20000000,
+      "totalPrice": 20050001,
+      "quantity": 1,
+      "transactionId": 4,
+      "id": 6
+    },
+    {
+      "productId": 2,
+      "price": 15000000,
+      "totalPrice": 30100001,
+      "quantity": 2,
+      "transactionId": 5,
+      "id": 7
+    },
+    {
+      "productId": 4,
+      "price": "23000000",
+      "totalPrice": 23100001,
+      "quantity": 1,
+      "transactionId": 5,
+      "id": 8
+    },
+    {
+      "productId": 2,
+      "price": 15000000,
+      "totalPrice": 15100000,
+      "quantity": 1,
+      "transactionId": 6,
+      "id": 9
+    }
+  ]
 }
