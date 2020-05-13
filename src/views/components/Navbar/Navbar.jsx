@@ -66,9 +66,9 @@ class Navbar extends React.Component {
         console.log(err);
       });
   };
-  componentDidUpdate() {
-    this.cartCountHandler();
-  }
+  // componentDidUpdate() {
+  //   this.cartCountHandler();
+  // }
 
   componentDidMount() {
     this.cartCountHandler();
