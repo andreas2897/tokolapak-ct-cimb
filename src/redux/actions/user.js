@@ -22,8 +22,6 @@ export const loginHandler = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
-<<<<<<< HEAD
-=======
           Axios.get(`${API_URL}/carts`, {
             params: {
               userId: res.data[0].id,
@@ -39,8 +37,7 @@ export const loginHandler = (userData) => {
               console.log(err);
             });
         } else {
->>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
-          alert("masuk");
+          alert("masuk")
         } else {
           dispatch({
             type: ON_LOGIN_FAIL,
@@ -154,12 +151,6 @@ export const cookieChecker = () => {
   };
 };
 
-<<<<<<< HEAD
-export const searchProduct = (searchInput) => {
-  return {
-    type: "SEARCH_PRODUCT",
-    payload: searchInput,
-=======
 export const fillCart = (userId) => {
   return (dispatch) => {
     Axios.get(`${API_URL}/carts`, {
@@ -176,6 +167,5 @@ export const fillCart = (userId) => {
       .catch((err) => {
         console.log(err);
       });
->>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
   };
 };
