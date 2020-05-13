@@ -10,7 +10,11 @@ const init_state = {
   role: "",
   errMsg: "",
   cookieChecked: false,
+<<<<<<< HEAD
   searchInput: "",
+=======
+  cartItems: 0,
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
 };
 
 export default (state = init_state, action) => {
@@ -33,8 +37,13 @@ export default (state = init_state, action) => {
       return { ...init_state, cookieChecked: true };
     case "COOKIE_CHECK":
       return { ...state, cookieChecked: true };
+<<<<<<< HEAD
     case "SEARCH_PRODUCT":
       return { ...state, cookieChecked: true, searchInput: action.payload };
+=======
+    case "FILL_CART":
+      return { ...state, cartItems: action.payload };
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
     default:
       return { ...state };
   }

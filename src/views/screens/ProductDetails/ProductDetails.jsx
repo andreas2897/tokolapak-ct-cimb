@@ -7,6 +7,7 @@ import ButtonUI from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
+import { fillCart } from "../../../redux/actions";
 
 class ProductDetails extends React.Component {
   state = {
@@ -21,11 +22,19 @@ class ProductDetails extends React.Component {
   };
 
   addToCartHandler = () => {
+<<<<<<< HEAD
+=======
+    // POST method ke /cart
+    // Isinya: userId, productId, quantity
+    // console.log(this.props.user.id);
+
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
     Axios.get(`${API_URL}/carts`, {
       params: {
         userId: this.props.user.id,
         productId: this.state.productData.id,
       },
+<<<<<<< HEAD
     })
       .then((res) => {
         if (res.data.length == 0) {
@@ -65,6 +74,45 @@ class ProductDetails extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+=======
+    }).then((res) => {
+      if (res.data.length) {
+        Axios.put(`${API_URL}/carts/${res.data[0].id}`, {
+          userId: this.props.user.id,
+          productId: this.state.productData.id,
+          quantity: res.data[0].quantity + 1,
+        })
+          .then((res) => {
+            swal(
+              "Add to cart",
+              "Your item has been added to your cart",
+              "success"
+            );
+            this.props.onFillCart(this.props.user.id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        Axios.post(`${API_URL}/carts`, {
+          userId: this.props.user.id,
+          productId: this.state.productData.id,
+          quantity: 1,
+        })
+          .then((res) => {
+            swal(
+              "Add to cart",
+              "Your item has been added to your cart",
+              "success"
+            );
+            this.props.onFillCart(this.props.user.id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
   };
 
   componentDidMount() {
@@ -118,4 +166,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ProductDetails);
+const mapDispatchToProps = {
+  onFillCart: fillCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

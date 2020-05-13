@@ -17,12 +17,20 @@ import AdminPayment from "./views/screens/Admin/AdminPayment";
 import History from "./views/screens/History/HistoryTransaction";
 import PageNotFound from "./views/screens/PageNotFound";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+<<<<<<< HEAD
 import AdminReport from "./views/screens/Admin/AdminReport";
+=======
+import Payments from "./views/screens/Admin/Payments";
+import PageNotFound from "./views/screens/PageNotFound";
+import History from "./views/screens/History/History";
+import Report from "./views/screens/Admin/Report";
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
 
 const cookieObj = new Cookie();
 
 class App extends React.Component {
   componentDidMount() {
+<<<<<<< HEAD
     setTimeout(() => {
       let cookieResult = cookieObj.get("authData", { path: "/" });
       if (cookieResult) {
@@ -31,6 +39,14 @@ class App extends React.Component {
         this.props.cookieChecker();
       }
     }, 2000);
+=======
+    let cookieResult = cookieObj.get("authData", { path: "/" });
+    if (cookieResult) {
+      this.props.keepLogin(cookieResult);
+    } else {
+      this.props.cookieChecker();
+    }
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
   }
 
   renderAdminRoutes = () => {
@@ -38,9 +54,25 @@ class App extends React.Component {
       return (
         <>
           <Route exact path="/admin/dashboard" component={AdminDashboard} />
+<<<<<<< HEAD
           <Route exact path="/admin/member" component={AdminMember} />
           <Route exact path="/admin/payment" component={AdminPayment} />
           <Route exact path="/admin/report" component={AdminReport} />
+=======
+          <Route exact path="/admin/payments" component={Payments} />
+          <Route exact path="/admin/report" component={Report} />
+        </>
+      );
+    }
+  };
+
+  renderProtectedRoutes = () => {
+    if (this.props.user.id) {
+      return (
+        <>
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/history" component={History} />
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
         </>
       );
     }
@@ -59,12 +91,18 @@ class App extends React.Component {
               path="/product/:productId"
               component={ProductDetails}
             />
+<<<<<<< HEAD
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/history" component={History} />
 
             {this.renderAdminRoutes()}
             <Route exact path="*" component={PageNotFound} />
             {/* <Route path="*" component={} /> */}
+=======
+            {this.renderAdminRoutes()}
+            {this.renderProtectedRoutes()}
+            <Route path="*" component={PageNotFound} />
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
           </Switch>
           <div style={{ height: "120px" }} />
         </>
@@ -95,7 +133,26 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
  * 3. Di navbar, ketika ketik, secara otomatis filter products (done)
  * 4. Di cart, buat button checkout, serta dengan proses checkout (done)
  * 5. Ketika confirm checkout, lakukan POST request ke db.json ke transaction
+<<<<<<< HEAD
  *    -> lalu cart harus kosong (done)
+=======
+ *    -> lalu cart harus kosong
+ *
+ * TRANSACTIONS
+ * userId
+ * total price
+ * status -> "pending"
+ * tanggal belanja
+ * tanggal selesai -> ""
+ *
+ * TRANSACTION_DETAILS
+ * transactionId
+ * productId
+ * price
+ * quantity
+ * totalPrice (price * quantity)
+ *
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
  */
 
 // * TRANSACTIONS

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
 import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -53,6 +55,7 @@ class Home extends React.Component {
     activeIndex: 0,
     animating: false,
     bestSellerData: [],
+    categoryFilter: "",
   };
 
   renderCarouselItems = () => {
@@ -133,11 +136,19 @@ class Home extends React.Component {
 
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
+<<<<<<< HEAD
       // Disini si state searchInput global dan dia ketrigger ketika di navbar ada event onChange, jadi disini dia juga ke trigger
       if (
         val.productName
           .toLowerCase()
           .startsWith(this.props.user.searchInput.toLowerCase())
+=======
+      if (
+        val.productName
+          .toLowerCase()
+          .includes(this.props.search.searchValue.toLowerCase()) &&
+        val.category.toLowerCase().includes(this.state.categoryFilter)
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
       ) {
         return (
           <Link
@@ -146,8 +157,13 @@ class Home extends React.Component {
           >
             <ProductCard
               key={`bestseller-${val.id}`}
+<<<<<<< HEAD
               className="m-2"
               data={val}
+=======
+              data={val}
+              className="m-2"
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
             />
           </Link>
         );
@@ -165,6 +181,7 @@ class Home extends React.Component {
     return (
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
+<<<<<<< HEAD
           <Link to="" style={{ color: "inherit" }}>
             <h6
               className="mx-4 font-weight-bold"
@@ -214,6 +231,42 @@ class Home extends React.Component {
             >
               DESKTOP
             </h6>
+=======
+          <Link
+            to="/"
+            style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "" })}
+          >
+            <h6 className="mx-4 font-weight-bold">ALL CATEGORY</h6>
+          </Link>
+          <Link
+            to="/"
+            style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "phone" })}
+          >
+            <h6 className="mx-4 font-weight-bold">PHONE</h6>
+          </Link>
+          <Link
+            to="/"
+            style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "laptop" })}
+          >
+            <h6 className="mx-4 font-weight-bold">LAPTOP</h6>
+          </Link>
+          <Link
+            to="/"
+            style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "tab" })}
+          >
+            <h6 className="mx-4 font-weight-bold">TAB</h6>
+          </Link>
+          <Link
+            to="/"
+            style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "desktop" })}
+          >
+            <h6 className="mx-4 font-weight-bold">DESKTOP</h6>
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
           </Link>
         </div>
         <Carousel
@@ -298,7 +351,14 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+<<<<<<< HEAD
     user: state.user,
   };
 };
+=======
+    search: state.search,
+  };
+};
+
+>>>>>>> 6b5598974e1af64d3812150b44ccdc72833d1aeb
 export default connect(mapStateToProps)(Home);
